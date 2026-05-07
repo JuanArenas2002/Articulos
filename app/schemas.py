@@ -421,25 +421,6 @@ class AuthorInPublication(BaseModel):
         }
 
 
-class PublicationWithDetails(CanonicalPublicationDetail):
-    external_records: List[SourceRecordSchema] = Field(
-        default_factory=list,
-        description="Registros originales de cada fuente bibliográfica que reporta esta publicación",
-    )
-    authors: List[AuthorInPublication] = Field(
-        default_factory=list,
-        description="Lista de autores ordenada por posición, con datos de identificación y rol",
-    )
-    revista: Optional[RevistaDetail] = Field(
-        None,
-        description="Información de la revista (SCImago + Latindex + Scopus) obtenida por ISSN del artículo",
-    )
-    clasificaciones_minciencias: List[ClasificacionMincienciasSchema] = Field(
-        default_factory=list,
-        description="Grupos de investigación que clasificaron esta publicación en Minciencias, con convocatoria y categoría obtenida",
-    )
-
-
 # ====================== GRUPOS / MINCIENCIAS SCHEMAS ======================
 
 class ClasificacionMincienciasSchema(BaseModel):
@@ -471,6 +452,25 @@ class ClasificacionMincienciasSchema(BaseModel):
                 except ValueError:
                     pass
         return None
+
+
+class PublicationWithDetails(CanonicalPublicationDetail):
+    external_records: List[SourceRecordSchema] = Field(
+        default_factory=list,
+        description="Registros originales de cada fuente bibliográfica que reporta esta publicación",
+    )
+    authors: List[AuthorInPublication] = Field(
+        default_factory=list,
+        description="Lista de autores ordenada por posición, con datos de identificación y rol",
+    )
+    revista: Optional[RevistaDetail] = Field(
+        None,
+        description="Información de la revista (SCImago + Latindex + Scopus) obtenida por ISSN del artículo",
+    )
+    clasificaciones_minciencias: List[ClasificacionMincienciasSchema] = Field(
+        default_factory=list,
+        description="Grupos de investigación que clasificaron esta publicación en Minciencias, con convocatoria y categoría obtenida",
+    )
 
     class Config:
         from_attributes = True
